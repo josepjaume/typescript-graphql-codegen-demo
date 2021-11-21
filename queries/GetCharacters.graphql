@@ -1,8 +1,13 @@
-query GetCharacters($search: String!) {
+query GetCharacters($search: String) {
   characters(filter: { name: $search }) {
     results {
       id
       name
+      type
+      origin {
+        name
+        dimension
+      }
       image
       status
       gender

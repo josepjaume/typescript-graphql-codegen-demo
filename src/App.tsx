@@ -23,6 +23,7 @@ import { useGetCharactersQuery } from "./graphql";
 
 function App() {
   let [search, setSearch] = useState("");
+
   let searchRef = useRef<HTMLInputElement>(null);
 
   let { data, loading } = useGetCharactersQuery({
@@ -55,32 +56,42 @@ function App() {
       ) : (
         <SimpleGrid minChildWidth="12rem" spacing={4}>
           {data?.characters?.results?.map((character) => (
-            <Popover trigger="hover">
-              <PopoverTrigger>
-                <Flex align="center" flexDirection="column">
+            <Flex align="center" flexDirection="column">
+              <Popover trigger="hover">
+                <PopoverTrigger>
                   {character?.image && (
                     <img
                       src={character?.image}
                       alt={character.name || "A Rick & Morty's character"}
                     />
                   )}
-                </Flex>
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverArrow />
-                <PopoverHeader>
-                  <strong>{character?.name}</strong>
-                </PopoverHeader>
-                <PopoverBody>
-                  <List>
-                    <ListItem>
-                      {character?.species} ({character?.gender})
-                    </ListItem>
-                    <ListItem>{character?.episode?.length} episodes</ListItem>
-                  </List>
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverHeader>
+                    <strong>{character?.name}</strong>,{" "}
+                    {character?.episode.length} episodes
+                  </PopoverHeader>
+                  <PopoverBody>
+                    <List>
+                      <ListItem>
+                        {character?.species} ({character?.gender})
+                      </ListItem>
+                      <ListItem>
+                        {character?.origin?.name} (
+                        {character?.origin?.dimension})
+                      </ListItem>
+                      {character?.type && (
+                        <ListItem>{character?.type}</ListItem>
+                      )}
+                    </List>
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
+              <Box marginTop={2}>
+                <strong>{character?.name}</strong>
+              </Box>
+            </Flex>
           ))}
         </SimpleGrid>
       )}

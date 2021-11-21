@@ -203,19 +203,24 @@ export type QueryLocationsByIdsArgs = {
 };
 
 export type GetCharactersQueryVariables = Exact<{
-  search: Scalars['String'];
+  search?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null | undefined, name?: string | null | undefined, image?: string | null | undefined, status?: string | null | undefined, gender?: string | null | undefined, species?: string | null | undefined, episode: Array<{ __typename?: 'Episode', id?: string | null | undefined, name?: string | null | undefined } | null | undefined> } | null | undefined> | null | undefined } | null | undefined };
+export type GetCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null | undefined, name?: string | null | undefined, type?: string | null | undefined, image?: string | null | undefined, status?: string | null | undefined, gender?: string | null | undefined, species?: string | null | undefined, origin?: { __typename?: 'Location', name?: string | null | undefined, dimension?: string | null | undefined } | null | undefined, episode: Array<{ __typename?: 'Episode', id?: string | null | undefined, name?: string | null | undefined } | null | undefined> } | null | undefined> | null | undefined } | null | undefined };
 
 
 export const GetCharactersDocument = gql`
-    query GetCharacters($search: String!) {
+    query GetCharacters($search: String) {
   characters(filter: {name: $search}) {
     results {
       id
       name
+      type
+      origin {
+        name
+        dimension
+      }
       image
       status
       gender
@@ -245,7 +250,7 @@ export const GetCharactersDocument = gql`
  *   },
  * });
  */
-export function useGetCharactersQuery(baseOptions: Apollo.QueryHookOptions<GetCharactersQuery, GetCharactersQueryVariables>) {
+export function useGetCharactersQuery(baseOptions?: Apollo.QueryHookOptions<GetCharactersQuery, GetCharactersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetCharactersQuery, GetCharactersQueryVariables>(GetCharactersDocument, options);
       }
