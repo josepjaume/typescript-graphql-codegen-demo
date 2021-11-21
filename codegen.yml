@@ -1,0 +1,13 @@
+schema: https://rickandmortyapi.com/graphql
+documents: "queries/**/*.graphql"
+generates:
+  ./src/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true
+  ./schema.graphql:
+    plugins:
+      - schema-ast
