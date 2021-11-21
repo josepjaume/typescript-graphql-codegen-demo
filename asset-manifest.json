@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/typescript-graphql-codegen/static/js/main.a622a8e7.chunk.js",
-    "main.js.map": "/typescript-graphql-codegen/static/js/main.a622a8e7.chunk.js.map",
+    "main.js": "/typescript-graphql-codegen/static/js/main.dfcba31e.chunk.js",
+    "main.js.map": "/typescript-graphql-codegen/static/js/main.dfcba31e.chunk.js.map",
     "runtime-main.js": "/typescript-graphql-codegen/static/js/runtime-main.6e806db4.js",
     "runtime-main.js.map": "/typescript-graphql-codegen/static/js/runtime-main.6e806db4.js.map",
     "static/js/2.1c71721c.chunk.js": "/typescript-graphql-codegen/static/js/2.1c71721c.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.6e806db4.js",
     "static/js/2.1c71721c.chunk.js",
-    "static/js/main.a622a8e7.chunk.js"
+    "static/js/main.dfcba31e.chunk.js"
   ]
 }
