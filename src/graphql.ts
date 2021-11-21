@@ -207,7 +207,7 @@ export type GetCharactersQueryVariables = Exact<{
 }>;
 
 
-export type GetCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null | undefined, name?: string | null | undefined, image?: string | null | undefined, status?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type GetCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null | undefined, name?: string | null | undefined, image?: string | null | undefined, status?: string | null | undefined, gender?: string | null | undefined, species?: string | null | undefined, episode: Array<{ __typename?: 'Episode', id?: string | null | undefined, name?: string | null | undefined } | null | undefined> } | null | undefined> | null | undefined } | null | undefined };
 
 
 export const GetCharactersDocument = gql`
@@ -218,6 +218,12 @@ export const GetCharactersDocument = gql`
       name
       image
       status
+      gender
+      episode {
+        id
+        name
+      }
+      species
     }
   }
 }

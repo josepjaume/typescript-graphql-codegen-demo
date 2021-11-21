@@ -5,6 +5,12 @@ query GetCharacters($search: String!) {
       name
       image
       status
+      gender
+      episode {
+        id
+        name
+      }
+      species
     }
   }
 }
