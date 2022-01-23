@@ -1,0 +1,10 @@
+
+tasks:
+  - init: npm install
+    command: npm run start
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - prisma.vscode-graphql
+    - esbenp.prettier-vscode
