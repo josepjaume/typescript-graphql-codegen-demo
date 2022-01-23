@@ -27,7 +27,7 @@ function App() {
 
   let searchRef = useRef<HTMLInputElement>(null);
 
-  let { data, loading } = useGetCharactersQuery({
+  let [{data, fetching}] = useGetCharactersQuery({
     variables: {
       search,
     },
@@ -52,12 +52,12 @@ function App() {
         </form>
       </Box>
 
-      {loading ? (
+      {fetching? (
         <Spinner />
       ) : (
         <SimpleGrid minChildWidth="12rem" spacing={4}>
           {data?.characters?.results?.map((character) => (
-            <Flex align="center" flexDirection="column">
+            <Flex align="center" flexDirection="column" key={character?.id}>
               <Popover trigger="hover">
                 <PopoverTrigger>
                   {character?.image && (

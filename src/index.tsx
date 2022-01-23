@@ -1,20 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
+import { createClient, dedupExchange, fetchExchange, Provider } from 'urql';
+import { devtoolsExchange } from '@urql/devtools';
+import { cacheExchange } from '@urql/exchange-graphcache';
 
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  uri: "https://rickandmortyapi.com/graphql",
+const client = createClient({
+  url: "https://rickandmortyapi.com/graphql",
+  exchanges: [devtoolsExchange, dedupExchange, cacheExchange({
+    keys: {
+      Location: () => null,
+      Characters: () => null,
+    }
+  }), fetchExchange],
+
 });
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
-      <ApolloProvider client={client}>
+      <Provider value={client}>
         <App />
-      </ApolloProvider>
+      </Provider>
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById("root")
