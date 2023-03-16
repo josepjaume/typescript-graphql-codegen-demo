@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import { FragmentType, graphql, useFragment } from "../gql";
+import { FragmentType, graphql, useFragment } from "../../gql";
 import { CharacterCard } from "./CharacterCard";
 
 const fragment = graphql(/* GraphQL */ `

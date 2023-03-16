@@ -1,12 +1,5 @@
-import { FragmentType, graphql, useFragment } from "../gql";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Heading,
-  Image,
-} from "@chakra-ui/react";
+import { FragmentType, graphql, useFragment } from "../../gql";
+import { Card, CardBody, Image } from "@chakra-ui/react";
 
 const fragment = graphql(/* GraphQL */ `
   fragment CharacterCard on Character {

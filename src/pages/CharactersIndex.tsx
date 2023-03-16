@@ -1,24 +1,50 @@
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import { useQuery } from "urql";
-import { CharacterGrid } from "../components/CharacterGrid";
+import { CharacterGrid } from "../components/Characters/CharacterGrid";
+import { EpisodeGrid } from "../components/Episodes/EpisodeGrid";
 import { graphql } from "../gql";
 import { PageLayout } from "../PageLayout";
 
-const charactersIndexDocument = graphql(/* GraphQL */ `
+const pageIndexDocument = graphql(/* GraphQL */ `
   query CharactersIndex {
     characters {
       ...CharacterGrid
+    }
+    episodes {
+      ...EpisodeGrid
+    }
+    locations {
+      ...LocationSelector
     }
   }
 `);
 
 export function CharactersIndexPage() {
   let [{ data, fetching, error }] = useQuery({
-    query: charactersIndexDocument,
+    query: pageIndexDocument,
   });
 
   return (
     <PageLayout fetching={fetching} error={error}>
-      {data?.characters && <CharacterGrid characters={data.characters} />}
+      <Tabs>
+        <TabList>
+          <Tab>Characters</Tab>
+          <Tab>Episodes</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            {data?.characters && <CharacterGrid characters={data.characters} />}
+          </TabPanel>
+          <TabPanel>
+            {data?.episodes && data.locations && (
+              <EpisodeGrid
+                episodes={data.episodes}
+                locations={data.locations}
+              />
+            )}
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </PageLayout>
   );
 }
