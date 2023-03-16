@@ -1,11 +1,10 @@
-import gql from 'graphql-tag';
-import * as Urql from 'urql';
+/* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -202,38 +201,21 @@ export type QueryLocationsByIdsArgs = {
   ids: Array<Scalars['ID']>;
 };
 
-export type GetCharactersQueryVariables = Exact<{
-  search?: InputMaybe<Scalars['String']>;
-}>;
+export type CharacterCardFragment = { __typename?: 'Character', name?: string | null, image?: string | null } & { ' $fragmentName'?: 'CharacterCardFragment' };
+
+export type CharacterGridFragment = { __typename?: 'Characters', results?: Array<(
+    { __typename?: 'Character' }
+    & { ' $fragmentRefs'?: { 'CharacterCardFragment': CharacterCardFragment } }
+  ) | null> | null, info?: { __typename?: 'Info', count?: number | null } | null } & { ' $fragmentName'?: 'CharacterGridFragment' };
+
+export type CharactersIndexQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', results?: Array<{ __typename?: 'Character', id?: string | null | undefined, name?: string | null | undefined, type?: string | null | undefined, image?: string | null | undefined, status?: string | null | undefined, gender?: string | null | undefined, species?: string | null | undefined, origin?: { __typename?: 'Location', name?: string | null | undefined, dimension?: string | null | undefined } | null | undefined, episode: Array<{ __typename?: 'Episode', id?: string | null | undefined, name?: string | null | undefined } | null | undefined> } | null | undefined> | null | undefined } | null | undefined };
+export type CharactersIndexQuery = { __typename?: 'Query', characters?: (
+    { __typename?: 'Characters' }
+    & { ' $fragmentRefs'?: { 'CharacterGridFragment': CharacterGridFragment } }
+  ) | null };
 
-
-export const GetCharactersDocument = gql`
-    query GetCharacters($search: String) {
-  characters(filter: {name: $search}) {
-    results {
-      id
-      name
-      type
-      origin {
-        name
-        dimension
-      }
-      image
-      status
-      gender
-      episode {
-        id
-        name
-      }
-      species
-    }
-  }
-}
-    `;
-
-export function useGetCharactersQuery(options: Omit<Urql.UseQueryArgs<GetCharactersQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<GetCharactersQuery>({ query: GetCharactersDocument, ...options });
-};
+export const CharacterCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CharacterCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Character"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]} as unknown as DocumentNode<CharacterCardFragment, unknown>;
+export const CharacterGridFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CharacterGrid"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Characters"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CharacterCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CharacterCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Character"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]} as unknown as DocumentNode<CharacterGridFragment, unknown>;
+export const CharactersIndexDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CharactersIndex"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"characters"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CharacterGrid"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CharacterCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Character"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CharacterGrid"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Characters"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"results"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CharacterCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]} as unknown as DocumentNode<CharactersIndexQuery, CharactersIndexQueryVariables>;
