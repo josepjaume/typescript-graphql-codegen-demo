@@ -33,7 +33,12 @@ export function CharactersIndexPage() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            {data?.characters && <CharacterGrid characters={data.characters} />}
+            {data?.characters && data?.locations && (
+              <CharacterGrid
+                characters={data.characters}
+                locations={data.locations}
+              />
+            )}
           </TabPanel>
           <TabPanel>
             {data?.episodes && data.locations && (
